@@ -8,12 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Ignore node_modules in both frontend and backend
-Frontend/node_modules/
-Backend/node_modules/
+node_modules/
+server/node_modules/
 
 #Ignore .env file from backend and frontend
-Backend/.env
-Frontend/.env
+server/.env
+.env
 
 # Build directories
 dist
