@@ -84,7 +84,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
                   </span> */}
                   <span
                     className={`${
-                      activeStatus === course?.sectionName
+                      activeStatus === course?._id
                         ? "rotate-0"
                         : "rotate-180"
                     } transition-all duration-500`}
@@ -115,7 +115,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
                       <input
                         type="checkbox"
                         checked={completedLectures.includes(topic?._id)}
-                        onChange={() => {}}
+                        readOnly
                       />
                       {topic.title}
                     </div>

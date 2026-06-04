@@ -42,11 +42,11 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path="/" element={<Home/>} />
-      <Route path="catalog/:catalogName" element={<Catalog/>} />
-      <Route path="courses/:courseId" element={<CourseDetails/>} />
+      <Route path="/catalog/:catalogName" element={<Catalog/>} />
+      <Route path="/courses/:courseId" element={<CourseDetails/>} />
       
       <Route
-          path="signup"
+          path="/signup"
           element={
             <OpenRoute>
               <Signup />
@@ -54,7 +54,7 @@ function App() {
           }
         />
     <Route
-          path="login"
+          path="/login"
           element={
             <OpenRoute>
               <Login />
@@ -63,7 +63,7 @@ function App() {
         />
 
     <Route
-          path="forgot-password"
+          path="/forgot-password"
           element={
             <OpenRoute>
               <ForgotPassword />
@@ -72,7 +72,7 @@ function App() {
         />  
 
       <Route
-          path="verify-email"
+          path="/verify-email"
           element={
             <OpenRoute>
               <VerifyEmail />
@@ -81,7 +81,7 @@ function App() {
         />  
 
     <Route
-          path="update-password/:id"
+          path="/update-password/:id"
           element={
             <OpenRoute>
               <UpdatePassword />
@@ -106,16 +106,16 @@ function App() {
         </PrivateRoute>
       }
     >
-      <Route path="dashboard/my-profile" element={<MyProfile />} />
+      <Route path="/dashboard/my-profile" element={<MyProfile />} />
       
-      <Route path="dashboard/Settings" element={<Settings />} />
+      <Route path="/dashboard/Settings" element={<Settings />} />
       
 
       {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
           <>
-          <Route path="dashboard/cart" element={<Cart />} />
-          <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+          <Route path="/dashboard/cart" element={<Cart />} />
+          <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses />} />
           </>
         )
       }
@@ -123,10 +123,10 @@ function App() {
       {
         user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
           <>
-          <Route path="dashboard/instructor" element={<Instructor />} />
-          <Route path="dashboard/add-course" element={<AddCourse />} />
-          <Route path="dashboard/my-courses" element={<MyCourses />} />
-          <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+          <Route path="/dashboard/instructor" element={<Instructor />} />
+          <Route path="/dashboard/add-course" element={<AddCourse />} />
+          <Route path="/dashboard/my-courses" element={<MyCourses />} />
+          <Route path="/dashboard/edit-course/:courseId" element={<EditCourse />} />
           
           </>
         )
@@ -146,7 +146,7 @@ function App() {
         user?.accountType === ACCOUNT_TYPE.STUDENT && (
           <>
           <Route 
-            path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+            path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
             element={<VideoDetails />}
           />
           </>

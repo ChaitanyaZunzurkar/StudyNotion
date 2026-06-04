@@ -53,7 +53,8 @@ exports.createCourse = async (req, res) => {
       status = "Draft"
     }
     // Check if the user is an instructor
-    const instructorDetails = await User.findById(userId, {
+    const instructorDetails = await User.findOne({
+      _id: userId,
       accountType: "Instructor",
     })
 
@@ -75,7 +76,7 @@ exports.createCourse = async (req, res) => {
     // Upload the Thumbnail to Cloudinary
     const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
-      process.env.CLOUDINARY_NAME
+      process.env.FOLDER_NAME
     )
     console.log(thumbnailImage)
     // Create a new course with the given details
@@ -148,7 +149,7 @@ exports.editCourse = async (req, res) => {
       const thumbnail = req.files.thumbnailImage
       const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
-        process.env.CLOUDINARY_NAME
+        process.env.FOLDER_NAME
       )
       course.thumbnail = thumbnailImage.secure_url
     }

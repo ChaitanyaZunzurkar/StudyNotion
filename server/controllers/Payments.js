@@ -29,7 +29,7 @@ exports.capturePayment = async (req, res) => {
       // If the course is not found, return an error
       if (!course) {
         return res
-          .status(200)
+          .status(404)
           .json({ success: false, message: "Could not find the Course" })
       }
 
@@ -37,7 +37,7 @@ exports.capturePayment = async (req, res) => {
       const uid = new mongoose.Types.ObjectId(userId)
       if (course.studentsEnrolled.some(id => id.equals(uid))) {
         return res
-          .status(200)
+          .status(409)
           .json({ success: false, message: "Student is already Enrolled" })
       }
 
@@ -45,7 +45,7 @@ exports.capturePayment = async (req, res) => {
       total_amount += course.price
     } catch (error) {
       console.error("Razorpay Error:", error)
-      res.status(500).json({ success: false, message: error.message })
+      return res.status(500).json({ success: false, message: error.message })
     }
   }
 
@@ -98,8 +98,12 @@ exports.verifyPayment = async (req, res) => {
     .digest("hex")
 
   if (expectedSignature === razorpay_signature) {
-    await enrollStudents(courses, userId, res)
-    return res.status(200).json({ success: true, message: "Payment Verified" })
+    try {
+      await enrollStudents(courses, userId)
+      return res.status(200).json({ success: true, message: "Payment Verified" })
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message })
+    }
   }
 
   return res.status(200).json({ success: false, message: "Payment Failed" })
@@ -130,6 +134,7 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
         paymentId
       )
     )
+    return res.status(200).json({ success: true, message: "Email sent successfully" })
   } catch (error) {
     console.log("error in sending mail", error)
     return res
@@ -139,11 +144,9 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
 }
 
 // enroll the student in the courses
-const enrollStudents = async (courses, userId, res) => {
+const enrollStudents = async (courses, userId) => {
   if (!courses || !userId) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Please Provide Course ID and User ID" })
+    throw new Error("Please Provide Course ID and User ID")
   }
 
   for (const courseId of courses) {
@@ -156,9 +159,7 @@ const enrollStudents = async (courses, userId, res) => {
       )
 
       if (!enrolledCourse) {
-        return res
-          .status(500)
-          .json({ success: false, error: "Course not found" })
+        throw new Error("Course not found")
       }
       console.log("Updated course: ", enrolledCourse)
 
@@ -193,7 +194,7 @@ const enrollStudents = async (courses, userId, res) => {
       console.log("Email sent successfully: ", emailResponse.response)
     } catch (error) {
       console.log(error)
-      return res.status(400).json({ success: false, error: error.message })
+      throw new Error(error.message)
     }
   }
 }

@@ -53,6 +53,8 @@ const VideoDetails = () => {
       (data) => data._id === sectionId
     )
 
+    if (currentSectionIndx === -1) return false;
+
     const currentSubSectionIndx = courseSectionData[
       currentSectionIndx
     ].subSection.findIndex((data) => data._id === subSectionId)
@@ -71,6 +73,8 @@ const VideoDetails = () => {
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
     )
+
+    if (currentSectionIndx === -1) return;
 
     const noOfSubsections =
       courseSectionData[currentSectionIndx].subSection.length
@@ -105,6 +109,8 @@ const VideoDetails = () => {
       (data) => data._id === sectionId
     )
 
+    if (currentSectionIndx === -1) return false;
+
     const noOfSubsections =
       courseSectionData[currentSectionIndx].subSection.length
 
@@ -129,6 +135,8 @@ const VideoDetails = () => {
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
     )
+
+    if (currentSectionIndx === -1) return;
 
     const currentSubSectionIndx = courseSectionData[
       currentSectionIndx
@@ -194,7 +202,7 @@ const VideoDetails = () => {
               }}
               className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
             >
-              {!completedLectures.includes(subSectionId) && (
+              {!completedLectures?.includes(subSectionId) && (
                 <IconBtn
                   disabled={loading}
                   onclick={() => handleLectureCompletion()}

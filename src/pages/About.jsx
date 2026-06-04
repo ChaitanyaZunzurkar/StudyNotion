@@ -8,7 +8,7 @@ import BannerImage3 from "../assets/Images/aboutus3.webp"
 import ContactFormSection from "../components/core/AboutPage/ContactFormSection"
 import LearningGrid from "../components/core/AboutPage/LearningGrid"
 import Quote from "../components/core/AboutPage/Quote"
-import StatsComponenet from "../components/core/AboutPage/Stats"
+import StatsComponent from "../components/core/AboutPage/Stats"
 import HighlightText from "../components/core/HomePage/HighlightText"
 import ReviewSlider from "../components/common/ReviewSlider"
 import Footer from "../components/common/Footer"
@@ -103,14 +103,14 @@ const About = () => {
         </div>
       </section>
 
-      <StatsComponenet />
+      <StatsComponent />
       <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white">
         <LearningGrid />
         <ContactFormSection />
       </section>
 
       <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
-        {/* Reviws from Other Learner */}
+        {/* Reviews from Other Learners */}
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>

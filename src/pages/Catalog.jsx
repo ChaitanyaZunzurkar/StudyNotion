@@ -3,7 +3,7 @@ import Footer from '../components/common/Footer'
 import { useParams } from 'react-router-dom'
 import { apiConnector } from '../services/apiconnector';
 import { categories } from '../services/apis';
-import { getCatalogaPageData } from '../services/operations/pageAndComponentData';
+import { getCatalogPageData } from '../services/operations/pageAndComponentData';
 import Course_Card from '../components/core/Catalog/Course_Card';
 import CourseSlider from '../components/core/Catalog/CourseSlider';
 import { useSelector } from "react-redux"
@@ -22,7 +22,7 @@ const Catalog = () => {
         const getCategories = async() => {
             const res = await apiConnector("GET", categories.CATEGORIES_API);
             const category_id = 
-            res?.data?.data?.filter((ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName)[0]._id;
+            res?.data?.data?.filter((ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName)[0]?._id;
             setCategoryId(category_id);
         }
         getCategories();
@@ -31,7 +31,7 @@ const Catalog = () => {
     useEffect(() => {
         const getCategoryDetails = async() => {
             try{
-                const res = await getCatalogaPageData(categoryId);
+                const res = await getCatalogPageData(categoryId);
                 console.log("PRinting res: ", res);
                 setCatalogPageData(res);
             }
@@ -89,7 +89,7 @@ const Catalog = () => {
                 } cursor-pointer`}
                 onClick={() => setActive(1)}
               >
-                Most Populer
+                Most Popular
               </p>
               <p
                 className={`px-4 py-2 ${

@@ -81,11 +81,11 @@ exports.deleteAccount = async (req, res) => {
     }
     // Now Delete User
     await User.findByIdAndDelete({ _id: id })
+    await CourseProgress.deleteMany({ userId: id })
     res.status(200).json({
       success: true,
       message: "User deleted successfully",
     })
-    await CourseProgress.deleteMany({ userId: id })
   } catch (error) {
     console.log(error)
     res
@@ -120,7 +120,7 @@ exports.updateDisplayPicture = async (req, res) => {
     const userId = req.user.id
     const image = await uploadImageToCloudinary(
       displayPicture,
-      process.env.CLOUDINARY_NAME,
+      process.env.FOLDER_NAME,
       1000,
       1000
     )
@@ -159,6 +159,13 @@ exports.getEnrolledCourses = async (req, res) => {
         },
       })
       .exec()
+      
+    if (!userDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find user`,
+      })
+    }
     userDetails = userDetails.toObject()
     var SubsectionLength = 0
     for (var i = 0; i < userDetails.courses.length; i++) {
@@ -191,12 +198,7 @@ exports.getEnrolledCourses = async (req, res) => {
       }
     }
 
-    if (!userDetails) {
-      return res.status(400).json({
-        success: false,
-        message: `Could not find user with id: ${userDetails}`,
-      })
-    }
+    // Check was moved up
     return res.status(200).json({
       success: true,
       data: userDetails.courses,
